@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contrat de location - Graco A100 Pro Plus</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <style>
   :root{
     --bg:#f4f5f7;
@@ -162,9 +163,13 @@
         </div>
       </div>
 
-      <label class="required" for="idFile">Carte d'identité (photo ou scan)</label>
-      <input type="file" id="idFile" accept="image/*" required>
+      <label class="required" for="chantierAdresse">Adresse du chantier</label>
+      <input type="text" id="chantierAdresse" placeholder="Ex : 12 rue des Lilas, 31000 Toulouse" required>
+
+      <label class="required" for="idFile">Carte d'identité (photo, scan ou PDF)</label>
+      <input type="file" id="idFile" accept="image/*,application/pdf,.pdf" required>
       <img id="idPreview" alt="Aperçu carte d'identité">
+      <p class="fixed-note" id="idFileInfo"></p>
     </div>
 
     <div class="card">
@@ -298,21 +303,74 @@ function isCanvasBlank(canvas){
   return canvas.toDataURL() === blank.toDataURL();
 }
 
-// ---------- ID preview ----------
+// ---------- ID preview (image ou PDF) ----------
 const idFile = document.getElementById('idFile');
 const idPreview = document.getElementById('idPreview');
-let idImageData = null;
+const idFileInfo = document.getElementById('idFileInfo');
+let idPagesData = [];
 
-idFile.addEventListener('change', () => {
+async function pdfToImages(file){
+  const arrayBuffer = await file.arrayBuffer();
+
+  // Configuration PDF.js
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
+  const pages = [];
+
+  for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
+    const page = await pdf.getPage(pageNum);
+    const viewport = page.getViewport({scale: 1.8});
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    await page.render({canvasContext: ctx, viewport}).promise;
+    pages.push(canvas.toDataURL('image/jpeg', 0.92));
+  }
+  return pages;
+}
+
+idFile.addEventListener('change', async () => {
   const file = idFile.files[0];
+  idPagesData = [];
+  idPreview.style.display = 'none';
+  idFileInfo.textContent = '';
+
   if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    idImageData = e.target.result;
-    idPreview.src = idImageData;
-    idPreview.style.display = 'block';
-  };
-  reader.readAsDataURL(file);
+
+  try{
+    if(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')){
+      idFileInfo.textContent = "Lecture du PDF...";
+      idPagesData = await pdfToImages(file);
+
+      if(idPagesData.length){
+        idPreview.src = idPagesData[0];
+        idPreview.style.display = 'block';
+        idFileInfo.textContent =
+          `PDF accepté — ${idPagesData.length} page${idPagesData.length > 1 ? 's' : ''} détectée${idPagesData.length > 1 ? 's' : ''}.`;
+      }
+    }else if(file.type.startsWith('image/')){
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        idPagesData = [e.target.result];
+        idPreview.src = e.target.result;
+        idPreview.style.display = 'block';
+        idFileInfo.textContent = "Image acceptée.";
+      };
+      reader.readAsDataURL(file);
+    }else{
+      idFile.value = '';
+      idFileInfo.textContent = "Format non accepté. Utilisez une image ou un PDF.";
+    }
+  }catch(err){
+    console.error(err);
+    idPagesData = [];
+    idFileInfo.textContent = "Impossible de lire ce fichier. Essayez une image ou un autre PDF.";
+  }
 });
 
 // ---------- PDF generation ----------
@@ -325,8 +383,8 @@ document.getElementById('contratForm').addEventListener('submit', async (e) => {
     status.textContent = "Merci de faire signer le propriétaire et le locataire avant de générer le PDF.";
     return;
   }
-  if(!idImageData){
-    status.textContent = "Merci d'ajouter la photo de la carte d'identité.";
+  if(!idPagesData.length){
+    status.textContent = "Merci d'ajouter la carte d'identité (image ou PDF).";
     return;
   }
 
@@ -377,6 +435,7 @@ document.getElementById('contratForm').addEventListener('submit', async (e) => {
   addSection('Locataire');
   addLine('Prénom', document.getElementById('locPrenom').value);
   addLine('Nom', document.getElementById('locNom').value);
+  addLine('Adresse du chantier', document.getElementById('chantierAdresse').value);
   y += 2;
 
   addSection('Détails de la location');
@@ -397,15 +456,36 @@ document.getElementById('contratForm').addEventListener('submit', async (e) => {
   addSection("Carte d'identité du locataire");
   y += 2;
   try{
-    const imgProps = doc.getImageProperties(idImageData);
-    const maxW = 90;
-    const w = maxW;
-    const h = (imgProps.height * maxW) / imgProps.width;
-    checkPageBreak(h + 10);
-    doc.addImage(idImageData, imgProps.fileType || 'JPEG', marginL, y, w, h);
-    y += h + 8;
+    for(let i = 0; i < idPagesData.length; i++){
+      const pageData = idPagesData[i];
+      const imgProps = doc.getImageProperties(pageData);
+
+      // Taille maxi pour rester propre sur une page A4
+      const maxW = 120;
+      const maxH = 95;
+      let w = maxW;
+      let h = (imgProps.height * w) / imgProps.width;
+
+      if(h > maxH){
+        h = maxH;
+        w = (imgProps.width * h) / imgProps.height;
+      }
+
+      checkPageBreak(h + 14);
+
+      if(idPagesData.length > 1){
+        doc.setFont('helvetica','normal');
+        doc.setFontSize(9);
+        doc.text(`Page ${i + 1} / ${idPagesData.length}`, marginL, y);
+        y += 5;
+      }
+
+      doc.addImage(pageData, 'JPEG', marginL, y, w, h);
+      y += h + 8;
+    }
   }catch(err){
-    addLine('Carte d\'identité', 'Erreur lors de l\'insertion de l\'image');
+    console.error(err);
+    addLine('Carte d\'identité', 'Erreur lors de l\'insertion du fichier');
   }
 
   checkPageBreak(90);
