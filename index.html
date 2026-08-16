@@ -1,1 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contrat de location - Graco A100 Pro Plus</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --card:#ffffff;
+    --border:#d8dbe0;
+    --text:#1f2430;
+    --muted:#6b7280;
+    --accent:#2563eb;
+    --accent-dark:#1d4ed8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    padding:24px 12px 60px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+  h1{font-size:1.4rem;margin-bottom:4px;}
+  .subtitle{color:var(--muted);margin-top:0;margin-bottom:24px;font-size:.95rem;}
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:18px;
+  }
+  .card h2{
+    font-size:1rem;
+    margin:0 0 14px 0;
+    color:var(--accent-dark);
+    border-bottom:1px solid var(--border);
+    padding-bottom:8px;
+  }
+  label{
+    display:block;
+    font-size:.85rem;
+    font-weight:600;
+    margin-bottom:4px;
+    margin-top:12px;
+  }
+  label:first-of-type{margin-top:0;}
+  input[type=text],
+  input[type=number],
+  input[type=date],
+  select{
+    width:100%;
+    padding:9px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    font-size:.95rem;
+    background:#fff;
+  }
+  .row{display:flex;gap:14px;flex-wrap:wrap;}
+  .row > div{flex:1;min-width:180px;}
+  .radio-group{display:flex;gap:16px;margin-top:6px;}
+  .radio-group label{
+    display:flex;align-items:center;gap:6px;
+    font-weight:normal;margin:0;font-size:.9rem;
+  }
+  .radio-group input{width:auto;}
+  input[type=file]{
+    width:100%;
+    padding:8px;
+    border:1px dashed var(--border);
+    border-radius:6px;
+    background:#fafbfc;
+  }
+  #idPreview{
+    margin-top:10px;
+    max-width:100%;
+    max-height:180px;
+    border-radius:6px;
+    display:none;
+    border:1px solid var(--border);
+  }
+  .sig-box{
+    border:1px solid var(--border);
+    border-radius:6px;
+    background:#fdfdfd;
+    touch-action:none;
+  }
+  canvas.sig-canvas{
+    width:100%;
+    height:150px;
+    display:block;
+  }
+  .sig-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:6px;
+  }
+  .sig-actions button{
+    background:none;
+    border:none;
+    color:var(--accent);
+    font-size:.8rem;
+    cursor:pointer;
+    text-decoration:underline;
+    padding:0;
+  }
+  .sig-title{font-weight:600;font-size:.85rem;margin-bottom:6px;margin-top:18px;}
+  .sig-title:first-of-type{margin-top:0;}
+  .fixed-note{color:var(--muted);font-size:.8rem;margin-top:4px;}
+  .btn-generate{
+    width:100%;
+    padding:14px;
+    font-size:1rem;
+    font-weight:600;
+    color:#fff;
+    background:var(--accent);
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:6px;
+  }
+  .btn-generate:hover{background:var(--accent-dark);}
+  .btn-generate:disabled{background:#9ca3af;cursor:not-allowed;}
+  .status{
+    text-align:center;
+    font-size:.85rem;
+    color:var(--muted);
+    margin-top:10px;
+    min-height:1.2em;
+  }
+  .required::after{content:" *";color:#dc2626;}
+</style>
+</head>
+<body>
+<div class="wrap">
 
+  <h1>Contrat de location — Pistolet Graco A100 Pro Plus</h1>
+  <p class="subtitle">Remplissez les champs ci-dessous puis générez le PDF signé. Aucune donnée n'est envoyée à un serveur : tout reste dans votre navigateur.</p>
+
+  <form id="contratForm">
+
+    <div class="card">
+      <h2>Propriétaire</h2>
+      <label class="required" for="proprioNom">Nom et prénom du propriétaire</label>
+      <input type="text" id="proprioNom" required>
+    </div>
+
+    <div class="card">
+      <h2>Locataire</h2>
+      <div class="row">
+        <div>
+          <label class="required" for="locPrenom">Prénom</label>
+          <input type="text" id="locPrenom" required>
+        </div>
+        <div>
+          <label class="required" for="locNom">Nom</label>
+          <input type="text" id="locNom" required>
+        </div>
+      </div>
+
+      <label class="required" for="idFile">Carte d'identité (photo ou scan)</label>
+      <input type="file" id="idFile" accept="image/*" required>
+      <img id="idPreview" alt="Aperçu carte d'identité">
+    </div>
+
+    <div class="card">
+      <h2>Location</h2>
+      <div class="row">
+        <div>
+          <label class="required" for="montantLocation">Montant de la location (€)</label>
+          <input type="number" id="montantLocation" min="0" step="0.01" required>
+        </div>
+        <div>
+          <label class="required" for="dateRecup">Date de récupération</label>
+          <input type="date" id="dateRecup" required>
+        </div>
+      </div>
+      <label class="required" for="duree">Durée de location prévue</label>
+      <input type="text" id="duree" placeholder="ex : 3 jours" required>
+    </div>
+
+    <div class="card">
+      <h2>Caution</h2>
+      <label class="required">Caution versée ?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="cautionFaite" value="Oui" required> Oui</label>
+        <label><input type="radio" name="cautionFaite" value="Non" required> Non</label>
+      </div>
+
+      <label class="required" for="cautionMoyen">Moyen de paiement de la caution</label>
+      <select id="cautionMoyen" required>
+        <option value="">-- Choisir --</option>
+        <option value="Espèces">Espèces</option>
+        <option value="Chèque">Chèque</option>
+        <option value="Virement">Virement</option>
+      </select>
+
+      <label for="cautionMontant">Montant de la caution (€)</label>
+      <input type="number" id="cautionMontant" value="400" min="0" step="0.01">
+      <p class="fixed-note">Par défaut fixé à 400 €, modifiable si besoin.</p>
+    </div>
+
+    <div class="card">
+      <h2>Signatures</h2>
+
+      <div class="sig-title">Signature du propriétaire</div>
+      <div class="sig-box"><canvas class="sig-canvas" id="sigProprio"></canvas></div>
+      <div class="sig-actions">
+        <button type="button" onclick="clearSig('sigProprio')">Effacer</button>
+      </div>
+
+      <div class="sig-title">Signature du locataire</div>
+      <div class="sig-box"><canvas class="sig-canvas" id="sigLocataire"></canvas></div>
+      <div class="sig-actions">
+        <button type="button" onclick="clearSig('sigLocataire')">Effacer</button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-generate" id="genBtn">Générer et télécharger le PDF</button>
+    <p class="status" id="status"></p>
+  </form>
+</div>
+
+<script>
+// ---------- Signature pads ----------
+const sigCanvases = {};
+
+function setupSignaturePad(id){
+  const canvas = document.getElementById(id);
+  const ctx = canvas.getContext('2d');
+
+  function resize(){
+    const ratio = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    ctx.scale(ratio, ratio);
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#1f2430';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let drawing = false;
+  let last = null;
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    return {x: p.clientX - rect.left, y: p.clientY - rect.top};
+  }
+
+  function start(e){
+    drawing = true;
+    last = pos(e);
+    e.preventDefault();
+  }
+  function move(e){
+    if(!drawing) return;
+    const p = pos(e);
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    last = p;
+    e.preventDefault();
+  }
+  function end(){ drawing = false; }
+
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', end);
+  canvas.addEventListener('touchstart', start, {passive:false});
+  canvas.addEventListener('touchmove', move, {passive:false});
+  canvas.addEventListener('touchend', end);
+
+  sigCanvases[id] = canvas;
+}
+
+function clearSig(id){
+  const canvas = sigCanvases[id];
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+setupSignaturePad('sigProprio');
+setupSignaturePad('sigLocataire');
+
+function isCanvasBlank(canvas){
+  const blank = document.createElement('canvas');
+  blank.width = canvas.width;
+  blank.height = canvas.height;
+  return canvas.toDataURL() === blank.toDataURL();
+}
+
+// ---------- ID preview ----------
+const idFile = document.getElementById('idFile');
+const idPreview = document.getElementById('idPreview');
+let idImageData = null;
+
+idFile.addEventListener('change', () => {
+  const file = idFile.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    idImageData = e.target.result;
+    idPreview.src = idImageData;
+    idPreview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// ---------- PDF generation ----------
+document.getElementById('contratForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const status = document.getElementById('status');
+  const genBtn = document.getElementById('genBtn');
+
+  if(isCanvasBlank(document.getElementById('sigProprio')) || isCanvasBlank(document.getElementById('sigLocataire'))){
+    status.textContent = "Merci de faire signer le propriétaire et le locataire avant de générer le PDF.";
+    return;
+  }
+  if(!idImageData){
+    status.textContent = "Merci d'ajouter la photo de la carte d'identité.";
+    return;
+  }
+
+  genBtn.disabled = true;
+  status.textContent = "Génération du PDF en cours...";
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({unit:'mm', format:'a4'});
+  const marginL = 18;
+  let y = 20;
+  const lineH = 7;
+  const pageW = 210;
+
+  function addTitle(txt){
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(14);
+    doc.text(txt, marginL, y);
+    y += 9;
+  }
+  function addSection(txt){
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(11);
+    doc.text(txt, marginL, y);
+    y += lineH;
+    doc.setDrawColor(210);
+    doc.line(marginL, y-4.5, pageW-marginL, y-4.5);
+  }
+  function addLine(label, value){
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(10.5);
+    doc.text(`${label} : ${value || '-'}`, marginL, y);
+    y += lineH;
+  }
+  function checkPageBreak(needed){
+    if(y + needed > 280){
+      doc.addPage();
+      y = 20;
+    }
+  }
+
+  addTitle('Contrat de location - Pistolet Graco A100 Pro Plus');
+  y += 2;
+
+  addSection('Propriétaire');
+  addLine('Nom et prénom', document.getElementById('proprioNom').value);
+  y += 2;
+
+  addSection('Locataire');
+  addLine('Prénom', document.getElementById('locPrenom').value);
+  addLine('Nom', document.getElementById('locNom').value);
+  y += 2;
+
+  addSection('Détails de la location');
+  addLine('Matériel loué', 'Pistolet à peinture Graco A100 Pro Plus');
+  addLine('Montant de la location', document.getElementById('montantLocation').value + ' €');
+  addLine('Date de récupération', document.getElementById('dateRecup').value);
+  addLine('Durée de location prévue', document.getElementById('duree').value);
+  y += 2;
+
+  const cautionFaite = document.querySelector('input[name="cautionFaite"]:checked');
+  addSection('Caution');
+  addLine('Caution versée', cautionFaite ? cautionFaite.value : '-');
+  addLine('Moyen de paiement', document.getElementById('cautionMoyen').value);
+  addLine('Montant de la caution', document.getElementById('cautionMontant').value + ' €');
+  y += 4;
+
+  checkPageBreak(70);
+  addSection("Carte d'identité du locataire");
+  y += 2;
+  try{
+    const imgProps = doc.getImageProperties(idImageData);
+    const maxW = 90;
+    const w = maxW;
+    const h = (imgProps.height * maxW) / imgProps.width;
+    checkPageBreak(h + 10);
+    doc.addImage(idImageData, imgProps.fileType || 'JPEG', marginL, y, w, h);
+    y += h + 8;
+  }catch(err){
+    addLine('Carte d\'identité', 'Erreur lors de l\'insertion de l\'image');
+  }
+
+  checkPageBreak(90);
+  addSection('Signatures');
+  y += 4;
+
+  const sigW = 80, sigH = 30;
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.text('Propriétaire :', marginL, y);
+  doc.text('Locataire :', marginL + 95, y);
+  y += 3;
+  doc.addImage(document.getElementById('sigProprio').toDataURL('image/png'), 'PNG', marginL, y, sigW, sigH);
+  doc.addImage(document.getElementById('sigLocataire').toDataURL('image/png'), 'PNG', marginL + 95, y, sigW, sigH);
+
+  const dateGeneration = new Date().toLocaleDateString('fr-FR');
+  doc.setFontSize(8);
+  doc.setTextColor(120);
+  doc.text(`Document généré le ${dateGeneration}`, marginL, 292);
+
+  const nomFichier = `contrat-location-graco-${document.getElementById('locNom').value || 'locataire'}.pdf`.replace(/\s+/g,'_');
+  doc.save(nomFichier);
+
+  status.textContent = "PDF généré et téléchargé.";
+  genBtn.disabled = false;
+});
+</script>
+</body>
+</html>
