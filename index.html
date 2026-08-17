@@ -2,516 +2,1846 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Contrat de location - Graco A100 Pro Plus</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
 <style>
-  :root{
-    --bg:#f4f5f7;
-    --card:#ffffff;
-    --border:#d8dbe0;
-    --text:#1f2430;
-    --muted:#6b7280;
-    --accent:#2563eb;
-    --accent-dark:#1d4ed8;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    padding:24px 12px 60px;
-  }
-  .wrap{max-width:720px;margin:0 auto;}
-  h1{font-size:1.4rem;margin-bottom:4px;}
-  .subtitle{color:var(--muted);margin-top:0;margin-bottom:24px;font-size:.95rem;}
-  .card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:20px;
-    margin-bottom:18px;
-  }
-  .card h2{
-    font-size:1rem;
-    margin:0 0 14px 0;
-    color:var(--accent-dark);
-    border-bottom:1px solid var(--border);
-    padding-bottom:8px;
-  }
-  label{
-    display:block;
-    font-size:.85rem;
-    font-weight:600;
-    margin-bottom:4px;
-    margin-top:12px;
-  }
-  label:first-of-type{margin-top:0;}
-  input[type=text],
-  input[type=number],
-  input[type=date],
-  select{
-    width:100%;
-    padding:9px 10px;
-    border:1px solid var(--border);
-    border-radius:6px;
-    font-size:.95rem;
-    background:#fff;
-  }
-  .row{display:flex;gap:14px;flex-wrap:wrap;}
-  .row > div{flex:1;min-width:180px;}
-  .radio-group{display:flex;gap:16px;margin-top:6px;}
-  .radio-group label{
-    display:flex;align-items:center;gap:6px;
-    font-weight:normal;margin:0;font-size:.9rem;
-  }
-  .radio-group input{width:auto;}
-  input[type=file]{
-    width:100%;
-    padding:8px;
-    border:1px dashed var(--border);
-    border-radius:6px;
-    background:#fafbfc;
-  }
-  #idPreview{
-    margin-top:10px;
-    max-width:100%;
-    max-height:180px;
-    border-radius:6px;
-    display:none;
-    border:1px solid var(--border);
-  }
-  .sig-box{
-    border:1px solid var(--border);
-    border-radius:6px;
-    background:#fdfdfd;
-    touch-action:none;
-  }
-  canvas.sig-canvas{
-    width:100%;
-    height:150px;
-    display:block;
-  }
-  .sig-actions{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:6px;
-  }
-  .sig-actions button{
-    background:none;
-    border:none;
-    color:var(--accent);
-    font-size:.8rem;
-    cursor:pointer;
-    text-decoration:underline;
-    padding:0;
-  }
-  .sig-title{font-weight:600;font-size:.85rem;margin-bottom:6px;margin-top:18px;}
-  .sig-title:first-of-type{margin-top:0;}
-  .fixed-note{color:var(--muted);font-size:.8rem;margin-top:4px;}
-  .btn-generate{
-    width:100%;
-    padding:14px;
-    font-size:1rem;
-    font-weight:600;
-    color:#fff;
-    background:var(--accent);
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    margin-top:6px;
-  }
-  .btn-generate:hover{background:var(--accent-dark);}
-  .btn-generate:disabled{background:#9ca3af;cursor:not-allowed;}
-  .status{
-    text-align:center;
-    font-size:.85rem;
-    color:var(--muted);
-    margin-top:10px;
-    min-height:1.2em;
-  }
-  .required::after{content:" *";color:#dc2626;}
+:root{
+  --bg:#f4f5f7;
+  --card:#fff;
+  --border:#d8dbe0;
+  --text:#1f2430;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --accent-dark:#1d4ed8;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  padding:24px 12px 60px;
+}
+
+.wrap{
+  max-width:720px;
+  margin:auto;
+}
+
+h1{
+  font-size:1.4rem;
+  margin-bottom:4px;
+}
+
+.subtitle{
+  color:var(--muted);
+  margin-top:0;
+  margin-bottom:24px;
+  font-size:.95rem;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px;
+  margin-bottom:18px;
+}
+
+.card h2{
+  font-size:1rem;
+  margin:0 0 14px;
+  color:var(--accent-dark);
+  border-bottom:1px solid var(--border);
+  padding-bottom:8px;
+}
+
+label{
+  display:block;
+  font-size:.85rem;
+  font-weight:600;
+  margin:12px 0 4px;
+}
+
+label:first-of-type{
+  margin-top:0;
+}
+
+input[type=text],
+input[type=number],
+input[type=date],
+select,
+textarea{
+  width:100%;
+  padding:9px 10px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  font-size:.95rem;
+  background:#fff;
+  font-family:inherit;
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.row{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.row>div{
+  flex:1;
+  min-width:180px;
+}
+
+.radio-group{
+  display:flex;
+  gap:16px;
+  margin-top:6px;
+}
+
+.radio-group label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:400;
+  margin:0;
+  font-size:.9rem;
+}
+
+input[type=file]{
+  width:100%;
+  padding:8px;
+  border:1px dashed var(--border);
+  border-radius:6px;
+  background:#fafbfc;
+}
+
+#idPreview{
+  margin-top:10px;
+  max-width:100%;
+  max-height:180px;
+  border-radius:6px;
+  display:none;
+  border:1px solid var(--border);
+}
+
+.fixed-value{
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#f8fafc;
+  font-weight:600;
+}
+
+.owner-signature{
+  display:block;
+  max-width:280px;
+  max-height:110px;
+  object-fit:contain;
+  margin-top:8px;
+}
+
+.sig-box{
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:#fdfdfd;
+  touch-action:none;
+}
+
+canvas.sig-canvas{
+  width:100%;
+  height:150px;
+  display:block;
+}
+
+.sig-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:6px;
+}
+
+.sig-actions button{
+  background:none;
+  border:0;
+  color:var(--accent);
+  font-size:.8rem;
+  cursor:pointer;
+  text-decoration:underline;
+  padding:0;
+}
+
+.sig-title{
+  font-weight:600;
+  font-size:.85rem;
+  margin:18px 0 6px;
+}
+
+.fixed-note{
+  color:var(--muted);
+  font-size:.8rem;
+  margin-top:6px;
+}
+
+.btn-generate{
+  width:100%;
+  padding:14px;
+  font-size:1rem;
+  font-weight:600;
+  color:#fff;
+  background:var(--accent);
+  border:0;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:6px;
+}
+
+.btn-generate:hover{
+  background:var(--accent-dark);
+}
+
+.btn-generate:disabled{
+  background:#9ca3af;
+  cursor:not-allowed;
+}
+
+.status{
+  text-align:center;
+  font-size:.85rem;
+  color:var(--muted);
+  margin-top:10px;
+  min-height:1.2em;
+}
+
+.required::after{
+  content:" *";
+  color:#dc2626;
+}
 </style>
 </head>
+
 <body>
+
 <div class="wrap">
 
-  <h1>Contrat de location — Pistolet Graco A100 Pro Plus</h1>
-  <p class="subtitle">Remplissez les champs ci-dessous puis générez le PDF signé. Aucune donnée n'est envoyée à un serveur : tout reste dans votre navigateur.</p>
+<h1>Contrat de location — Pistolet Graco A100 Pro Plus</h1>
 
-  <form id="contratForm">
+<p class="subtitle">
+Le locataire remplit ses informations, ajoute sa pièce d'identité et signe,
+puis génère le PDF. Les informations et la signature du propriétaire sont déjà intégrées.
+Aucune donnée n'est envoyée à un serveur : tout reste dans le navigateur.
+</p>
 
-    <div class="card">
-      <h2>Propriétaire</h2>
-      <label class="required" for="proprioNom">Nom et prénom du propriétaire</label>
-      <input type="text" id="proprioNom" required>
-    </div>
+<form id="contratForm">
 
-    <div class="card">
-      <h2>Locataire</h2>
-      <div class="row">
-        <div>
-          <label class="required" for="locPrenom">Prénom</label>
-          <input type="text" id="locPrenom" required>
-        </div>
-        <div>
-          <label class="required" for="locNom">Nom</label>
-          <input type="text" id="locNom" required>
-        </div>
-      </div>
+<div class="card">
 
-      <label class="required" for="chantierAdresse">Adresse du chantier</label>
-      <input type="text" id="chantierAdresse" placeholder="Ex : 12 rue des Lilas, 31000 Toulouse" required>
+<h2>Propriétaire</h2>
 
-      <label class="required" for="idFile">Carte d'identité (photo, scan ou PDF)</label>
-      <input type="file" id="idFile" accept="image/*,application/pdf,.pdf" required>
-      <img id="idPreview" alt="Aperçu carte d'identité">
-      <p class="fixed-note" id="idFileInfo"></p>
-    </div>
+<label>Nom et prénom du propriétaire</label>
 
-    <div class="card">
-      <h2>Location</h2>
-      <div class="row">
-        <div>
-          <label class="required" for="montantLocation">Montant de la location (€)</label>
-          <input type="number" id="montantLocation" min="0" step="0.01" required>
-        </div>
-        <div>
-          <label class="required" for="dateRecup">Date de récupération</label>
-          <input type="date" id="dateRecup" required>
-        </div>
-      </div>
-      <label class="required" for="duree">Durée de location prévue</label>
-      <input type="text" id="duree" placeholder="ex : 3 jours" required>
-    </div>
-
-    <div class="card">
-      <h2>Caution</h2>
-      <label class="required">Caution versée ?</label>
-      <div class="radio-group">
-        <label><input type="radio" name="cautionFaite" value="Oui" required> Oui</label>
-        <label><input type="radio" name="cautionFaite" value="Non" required> Non</label>
-      </div>
-
-      <label class="required" for="cautionMoyen">Moyen de paiement de la caution</label>
-      <select id="cautionMoyen" required>
-        <option value="">-- Choisir --</option>
-        <option value="Espèces">Espèces</option>
-        <option value="Chèque">Chèque</option>
-        <option value="Virement">Virement</option>
-      </select>
-
-      <label for="cautionMontant">Montant de la caution (€)</label>
-      <input type="number" id="cautionMontant" value="400" min="0" step="0.01">
-      <p class="fixed-note">Par défaut fixé à 400 €, modifiable si besoin.</p>
-    </div>
-
-    <div class="card">
-      <h2>Signatures</h2>
-
-      <div class="sig-title">Signature du propriétaire</div>
-      <div class="sig-box"><canvas class="sig-canvas" id="sigProprio"></canvas></div>
-      <div class="sig-actions">
-        <button type="button" onclick="clearSig('sigProprio')">Effacer</button>
-      </div>
-
-      <div class="sig-title">Signature du locataire</div>
-      <div class="sig-box"><canvas class="sig-canvas" id="sigLocataire"></canvas></div>
-      <div class="sig-actions">
-        <button type="button" onclick="clearSig('sigLocataire')">Effacer</button>
-      </div>
-    </div>
-
-    <button type="submit" class="btn-generate" id="genBtn">Générer et télécharger le PDF</button>
-    <p class="status" id="status"></p>
-  </form>
+<div class="fixed-value">
+Dorian Thébé
 </div>
 
+<div class="sig-title">
+Signature du propriétaire
+</div>
+
+<img
+class="owner-signature"
+src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMjc1Ij48cGF0aCBkPSJNNDk5IDczTDQ5NiA2OUw0OTAgNjhMNDU2IDgzTDQwMyAxMDJMMzYxIDEwM0wzMTEgMTE0TDMwNiAxMDZMMzU4IDgwTDQzMiA0MEw0NDggMjdMNDQ4IDIwTDQ0NSAxNkw0NDAgMTRMNDI1IDE1TDQwOCAyMEwzNDkgNDNMMjg5IDcyTDI3OCA0OUwyNjUgMkwyNjEgMEwyNjIgMTRMMjY4IDQxTDI4MiA3NkwxNjMgMTQwTDczIDE5NkwxMyAyNDJMMiAyNTRMMCAyNTlMMSAyNjZMOCAyNzFMMjIgMjcxTDQ3IDI2Nkw2OCAyNTlMMTE5IDIzOEwyNDEgMTgyTDMxNyAxNTFMMzI0IDE2NkwzMjMgMTY4TDI3MSAxOTdMMTgxIDI1MUwxNzAgMjYxTDE3MCAyNjdMMTcyIDI3MEwxODAgMjczTDI2MSAyNzRMMjgwIDI3MkwzMDEgMjY3TDMyMSAyNTZMMzMyIDI0NUwzMzcgMjM2TDM0MCAyMjRMMzQwIDE5M0wzMzcgMTc5TDMzOCAxNzRMMzkwIDE0N0w0MjQgMTI3TDQzMiAxMjBMNDM0IDExNkw0MzMgMTA3TDQ2MyA5Nkw0OTUgODFMNDk5IDc3Wk0zMjggMTgyTDMzMCAxOTNMMzI5IDIyN0wzMjQgMjM4TDMwOCAyNTJMMjkxIDI1OUwyNjMgMjY0TDE4MyAyNjZMMTgxIDI2NEwzMjYgMTgxWk0xNDYgMTY5TDE0OCAxNjlaTTE0NyAxNjhMMTUwIDE2OFpNMzExIDEzNkwyMjcgMTcxTDc3IDI0MEw0MSAyNTNMMjMgMjU3TDE5IDI1Nkw0MCAyMzhMNzIgMjE1TDc4IDIxNUw5NiAyMDlMMTYyIDE3OEwyMDAgMTY0TDMwNiAxMzBaTTI2MyAxMjhMMjY1IDEyOFpNMzU2IDExOUwzMjEgMTMzTDMxOCAxMzBMMzIwIDEyNkwzNTAgMTE4Wk0zNTUgMTE4TDM1OSAxMThaTTQyMCAxMTZMNDAxIDEyOEwzMzUgMTYyTDMzMSAxNTlMMzI3IDE0OUwzMjkgMTQ2TDQxMyAxMTRaTTMwMSAxMTZMMzAwIDExOEwyNjggMTI4TDI2NSAxMjdMMjk3IDExMFpNMjg5IDkyTDI5MSA5NkwxNzUgMTU3TDE1MiAxNjhMMTQ5IDE2N0wyMTcgMTI4TDI4NyA5MVpNNDE5IDMzTDMwMSA5MkwyOTcgODlMMjk4IDg1TDM1NiA1Nkw0MTYgMzJaTTQxOCAzMkw0MjAgMzJaIiBmaWxsPSJibGFjayIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+"
+alt="Signature de Dorian Thébé"
+>
+
+<p class="fixed-note">
+Ces informations sont déjà renseignées et seront intégrées automatiquement au PDF.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Locataire</h2>
+
+<div class="row">
+
+<div>
+<label class="required" for="locPrenom">Prénom</label>
+<input type="text" id="locPrenom" required>
+</div>
+
+<div>
+<label class="required" for="locNom">Nom</label>
+<input type="text" id="locNom" required>
+</div>
+
+</div>
+
+
+<label class="required" for="chantierAdresse">
+Adresse du chantier
+</label>
+
+<input
+type="text"
+id="chantierAdresse"
+placeholder="Ex : 12 rue des Lilas, 31000 Toulouse"
+required
+>
+
+
+<label class="required" for="idFile">
+Carte d'identité (photo, scan ou PDF)
+</label>
+
+<input
+type="file"
+id="idFile"
+accept="image/*,application/pdf,.pdf"
+required
+>
+
+<img
+id="idPreview"
+alt="Aperçu carte d'identité"
+>
+
+<p
+class="fixed-note"
+id="idFileInfo"
+></p>
+
+</div>
+
+
+<div class="card">
+
+<h2>Location</h2>
+
+<div class="row">
+
+<div>
+
+<label class="required" for="montantLocation">
+Montant de la location (€)
+</label>
+
+<input
+type="number"
+id="montantLocation"
+min="0"
+step="0.01"
+required
+>
+
+</div>
+
+
+<div>
+
+<label class="required" for="dateRecup">
+Date de récupération
+</label>
+
+<input
+type="date"
+id="dateRecup"
+required
+>
+
+</div>
+
+</div>
+
+
+<label class="required" for="duree">
+Durée de location prévue
+</label>
+
+<input
+type="text"
+id="duree"
+placeholder="Ex : 3 jours"
+required
+>
+
+
+<label for="remarques">
+
+Remarques / informations complémentaires
+
+<span
+style="font-weight:400;color:var(--muted)"
+>
+(facultatif)
+</span>
+
+</label>
+
+
+<textarea
+id="remarques"
+placeholder="Ex : modalités de retour, état particulier du matériel, précision sur le chantier..."
+></textarea>
+
+</div>
+
+
+<div class="card">
+
+<h2>Caution</h2>
+
+<label class="required">
+Caution versée ?
+</label>
+
+<div class="radio-group">
+
+<label>
+<input
+type="radio"
+name="cautionFaite"
+value="Oui"
+required
+>
+Oui
+</label>
+
+<label>
+<input
+type="radio"
+name="cautionFaite"
+value="Non"
+required
+>
+Non
+</label>
+
+</div>
+
+
+<label
+class="required"
+for="cautionMoyen"
+>
+Moyen de paiement de la caution
+</label>
+
+
+<select
+id="cautionMoyen"
+required
+>
+
+<option value="">
+-- Choisir --
+</option>
+
+<option>
+Espèces
+</option>
+
+<option>
+Chèque
+</option>
+
+<option>
+Virement
+</option>
+
+</select>
+
+
+<label for="cautionMontant">
+Montant de la caution (€)
+</label>
+
+<input
+type="number"
+id="cautionMontant"
+value="400"
+min="0"
+step="0.01"
+>
+
+<p class="fixed-note">
+Par défaut fixé à 400 €, modifiable si besoin.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Signature du locataire
+</h2>
+
+<div class="sig-title">
+Signature du locataire
+</div>
+
+<div class="sig-box">
+
+<canvas
+class="sig-canvas"
+id="sigLocataire"
+></canvas>
+
+</div>
+
+<div class="sig-actions">
+
+<button
+type="button"
+onclick="clearSig()"
+>
+Effacer
+</button>
+
+</div>
+
+<p class="fixed-note">
+La signature du propriétaire est déjà enregistrée et sera ajoutée automatiquement au PDF.
+</p>
+
+</div>
+
+
+<button
+type="submit"
+class="btn-generate"
+id="genBtn"
+>
+
+Générer et télécharger le PDF
+
+</button>
+
+<p
+class="status"
+id="status"
+></p>
+
+</form>
+
+</div>
+
+
 <script>
-// ---------- Signature pads ----------
-const sigCanvases = {};
 
-function setupSignaturePad(id){
-  const canvas = document.getElementById(id);
-  const ctx = canvas.getContext('2d');
+const OWNER_NAME =
+"Dorian Thébé";
 
-  function resize(){
-    const ratio = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * ratio;
-    canvas.height = rect.height * ratio;
-    ctx.scale(ratio, ratio);
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.strokeStyle = '#1f2430';
-  }
-  resize();
-  window.addEventListener('resize', resize);
 
-  let drawing = false;
-  let last = null;
+const OWNER_SIGNATURE =
+"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgMjc1Ij48cGF0aCBkPSJNNDk5IDczTDQ5NiA2OUw0OTAgNjhMNDU2IDgzTDQwMyAxMDJMMzYxIDEwM0wzMTEgMTE0TDMwNiAxMDZMMzU4IDgwTDQzMiA0MEw0NDggMjdMNDQ4IDIwTDQ0NSAxNkw0NDAgMTRMNDI1IDE1TDQwOCAyMEwzNDkgNDNMMjg5IDcyTDI3OCA0OUwyNjUgMkwyNjEgMEwyNjIgMTRMMjY4IDQxTDI4MiA3NkwxNjMgMTQwTDczIDE5NkwxMyAyNDJMMiAyNTRMMCAyNTlMMSAyNjZMOCAyNzFMMjIgMjcxTDQ3IDI2Nkw2OCAyNTlMMTE5IDIzOEwyNDEgMTgyTDMxNyAxNTFMMzI0IDE2NkwzMjMgMTY4TDI3MSAxOTdMMTgxIDI1MUwxNzAgMjYxTDE3MCAyNjdMMTcyIDI3MEwxODAgMjczTDI2MSAyNzRMMjgwIDI3MkwzMDEgMjY3TDMyMSAyNTZMMzMyIDI0NUwzMzcgMjM2TDM0MCAyMjRMMzQwIDE5M0wzMzcgMTc5TDMzOCAxNzRMMzkwIDE0N0w0MjQgMTI3TDQzMiAxMjBMNDM0IDExNkw0MzMgMTA3TDQ2MyA5Nkw0OTUgODFMNDk5IDc3Wk0zMjggMTgyTDMzMCAxOTNMMzI5IDIyN0wzMjQgMjM4TDMwOCAyNTJMMjkxIDI1OUwyNjMgMjY0TDE4MyAyNjZMMTgxIDI2NEwzMjYgMTgxWk0xNDYgMTY5TDE0OCAxNjlaTTE0NyAxNjhMMTUwIDE2OFpNMzExIDEzNkwyMjcgMTcxTDc3IDI0MEw0MSAyNTNMMjMgMjU3TDE5IDI1Nkw0MCAyMzhMNzIgMjE1TDc4IDIxNUw5NiAyMDlMMTYyIDE3OEwyMDAgMTY0TDMwNiAxMzBaTTI2MyAxMjhMMjY1IDEyOFpNMzU2IDExOUwzMjEgMTMzTDMxOCAxMzBMMzIwIDEyNkwzNTAgMTE4Wk0zNTUgMTE4TDM1OSAxMThaTTQyMCAxMTZMNDAxIDEyOEwzMzUgMTYyTDMzMSAxNTlMMzI3IDE0OUwzMjkgMTQ2TDQxMyAxMTRaTTMwMSAxMTZMMzAwIDExOEwyNjggMTI4TDI2NSAxMjdMMjk3IDExMFpNMjg5IDkyTDI5MSA5NkwxNzUgMTU3TDE1MiAxNjhMMTQ5IDE2N0wyMTcgMTI4TDI4NyA5MVpNNDE5IDMzTDMwMSA5MkwyOTcgODlMMjk4IDg1TDM1NiA1Nkw0MTYgMzJaTTQxOCAzMkw0MjAgMzJaIiBmaWxsPSJibGFjayIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+";
 
-  function pos(e){
-    const rect = canvas.getBoundingClientRect();
-    const p = e.touches ? e.touches[0] : e;
-    return {x: p.clientX - rect.left, y: p.clientY - rect.top};
-  }
 
-  function start(e){
-    drawing = true;
-    last = pos(e);
-    e.preventDefault();
-  }
-  function move(e){
-    if(!drawing) return;
-    const p = pos(e);
-    ctx.beginPath();
-    ctx.moveTo(last.x, last.y);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
-    last = p;
-    e.preventDefault();
-  }
-  function end(){ drawing = false; }
+const canvas =
+document.getElementById("sigLocataire");
 
-  canvas.addEventListener('mousedown', start);
-  canvas.addEventListener('mousemove', move);
-  window.addEventListener('mouseup', end);
-  canvas.addEventListener('touchstart', start, {passive:false});
-  canvas.addEventListener('touchmove', move, {passive:false});
-  canvas.addEventListener('touchend', end);
+const ctx =
+canvas.getContext("2d");
 
-  sigCanvases[id] = canvas;
-}
 
-function clearSig(id){
-  const canvas = sigCanvases[id];
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
+let drawing = false;
 
-setupSignaturePad('sigProprio');
-setupSignaturePad('sigLocataire');
+let last = null;
 
-function isCanvasBlank(canvas){
-  const blank = document.createElement('canvas');
-  blank.width = canvas.width;
-  blank.height = canvas.height;
-  return canvas.toDataURL() === blank.toDataURL();
-}
-
-// ---------- ID preview (image ou PDF) ----------
-const idFile = document.getElementById('idFile');
-const idPreview = document.getElementById('idPreview');
-const idFileInfo = document.getElementById('idFileInfo');
 let idPagesData = [];
 
-async function pdfToImages(file){
-  const arrayBuffer = await file.arrayBuffer();
 
-  // Configuration PDF.js
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+function resizeCanvas(){
 
-  const pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
-  const pages = [];
+const ratio =
+window.devicePixelRatio || 1;
 
-  for(let pageNum = 1; pageNum <= pdf.numPages; pageNum++){
-    const page = await pdf.getPage(pageNum);
-    const viewport = page.getViewport({scale: 1.8});
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+const rect =
+canvas.getBoundingClientRect();
 
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
+canvas.width =
+rect.width * ratio;
 
-    await page.render({canvasContext: ctx, viewport}).promise;
-    pages.push(canvas.toDataURL('image/jpeg', 0.92));
-  }
-  return pages;
+canvas.height =
+rect.height * ratio;
+
+ctx.setTransform(
+ratio,
+0,
+0,
+ratio,
+0,
+0
+);
+
+ctx.lineWidth = 2;
+
+ctx.lineCap =
+"round";
+
+ctx.strokeStyle =
+"#1f2430";
+
 }
 
-idFile.addEventListener('change', async () => {
-  const file = idFile.files[0];
-  idPagesData = [];
-  idPreview.style.display = 'none';
-  idFileInfo.textContent = '';
 
-  if(!file) return;
+resizeCanvas();
 
-  try{
-    if(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')){
-      idFileInfo.textContent = "Lecture du PDF...";
-      idPagesData = await pdfToImages(file);
 
-      if(idPagesData.length){
-        idPreview.src = idPagesData[0];
-        idPreview.style.display = 'block';
-        idFileInfo.textContent =
-          `PDF accepté — ${idPagesData.length} page${idPagesData.length > 1 ? 's' : ''} détectée${idPagesData.length > 1 ? 's' : ''}.`;
-      }
-    }else if(file.type.startsWith('image/')){
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        idPagesData = [e.target.result];
-        idPreview.src = e.target.result;
-        idPreview.style.display = 'block';
-        idFileInfo.textContent = "Image acceptée.";
-      };
-      reader.readAsDataURL(file);
-    }else{
-      idFile.value = '';
-      idFileInfo.textContent = "Format non accepté. Utilisez une image ou un PDF.";
-    }
-  }catch(err){
-    console.error(err);
-    idPagesData = [];
-    idFileInfo.textContent = "Impossible de lire ce fichier. Essayez une image ou un autre PDF.";
-  }
+function pos(e){
+
+const rect =
+canvas.getBoundingClientRect();
+
+const p =
+e.touches
+? e.touches[0]
+: e;
+
+return{
+
+x:
+p.clientX - rect.left,
+
+y:
+p.clientY - rect.top
+
+};
+
+}
+
+
+function start(e){
+
+drawing = true;
+
+last = pos(e);
+
+e.preventDefault();
+
+}
+
+
+function move(e){
+
+if(!drawing)
+return;
+
+const p =
+pos(e);
+
+ctx.beginPath();
+
+ctx.moveTo(
+last.x,
+last.y
+);
+
+ctx.lineTo(
+p.x,
+p.y
+);
+
+ctx.stroke();
+
+last = p;
+
+e.preventDefault();
+
+}
+
+
+function end(){
+
+drawing = false;
+
+}
+
+
+canvas.addEventListener(
+"mousedown",
+start
+);
+
+canvas.addEventListener(
+"mousemove",
+move
+);
+
+window.addEventListener(
+"mouseup",
+end
+);
+
+canvas.addEventListener(
+"touchstart",
+start,
+{
+passive:false
+}
+);
+
+canvas.addEventListener(
+"touchmove",
+move,
+{
+passive:false
+}
+);
+
+canvas.addEventListener(
+"touchend",
+end
+);
+
+
+function clearSig(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+}
+
+
+function isBlank(){
+
+const data =
+ctx.getImageData(
+0,
+0,
+canvas.width,
+canvas.height
+).data;
+
+for(
+let i = 3;
+i < data.length;
+i += 4
+){
+
+if(
+data[i] !== 0
+)
+return false;
+
+}
+
+return true;
+
+}
+
+
+
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+
+const idFile =
+document.getElementById("idFile");
+
+const idPreview =
+document.getElementById("idPreview");
+
+const idFileInfo =
+document.getElementById("idFileInfo");
+
+
+async function pdfToImages(file){
+
+const pdf =
+await pdfjsLib.getDocument({
+
+data:
+await file.arrayBuffer()
+
+}).promise;
+
+
+const pages = [];
+
+
+for(
+let pageNumber = 1;
+pageNumber <= pdf.numPages;
+pageNumber++
+){
+
+const page =
+await pdf.getPage(pageNumber);
+
+
+const viewport =
+page.getViewport({
+scale:1.8
 });
 
-// ---------- PDF generation ----------
-document.getElementById('contratForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const status = document.getElementById('status');
-  const genBtn = document.getElementById('genBtn');
 
-  if(isCanvasBlank(document.getElementById('sigProprio')) || isCanvasBlank(document.getElementById('sigLocataire'))){
-    status.textContent = "Merci de faire signer le propriétaire et le locataire avant de générer le PDF.";
-    return;
-  }
-  if(!idPagesData.length){
-    status.textContent = "Merci d'ajouter la carte d'identité (image ou PDF).";
-    return;
-  }
+const tempCanvas =
+document.createElement("canvas");
 
-  genBtn.disabled = true;
-  status.textContent = "Génération du PDF en cours...";
+const tempCtx =
+tempCanvas.getContext("2d");
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({unit:'mm', format:'a4'});
-  const marginL = 18;
-  let y = 20;
-  const lineH = 7;
-  const pageW = 210;
 
-  function addTitle(txt){
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(14);
-    doc.text(txt, marginL, y);
-    y += 9;
-  }
-  function addSection(txt){
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(11);
-    doc.text(txt, marginL, y);
-    y += lineH;
-    doc.setDrawColor(210);
-    doc.line(marginL, y-4.5, pageW-marginL, y-4.5);
-  }
-  function addLine(label, value){
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(10.5);
-    doc.text(`${label} : ${value || '-'}`, marginL, y);
-    y += lineH;
-  }
-  function checkPageBreak(needed){
-    if(y + needed > 280){
-      doc.addPage();
-      y = 20;
-    }
-  }
+tempCanvas.width =
+viewport.width;
 
-  addTitle('Contrat de location - Pistolet Graco A100 Pro Plus');
-  y += 2;
+tempCanvas.height =
+viewport.height;
 
-  addSection('Propriétaire');
-  addLine('Nom et prénom', document.getElementById('proprioNom').value);
-  y += 2;
 
-  addSection('Locataire');
-  addLine('Prénom', document.getElementById('locPrenom').value);
-  addLine('Nom', document.getElementById('locNom').value);
-  addLine('Adresse du chantier', document.getElementById('chantierAdresse').value);
-  y += 2;
+await page.render({
 
-  addSection('Détails de la location');
-  addLine('Matériel loué', 'Pistolet à peinture Graco A100 Pro Plus');
-  addLine('Montant de la location', document.getElementById('montantLocation').value + ' €');
-  addLine('Date de récupération', document.getElementById('dateRecup').value);
-  addLine('Durée de location prévue', document.getElementById('duree').value);
-  y += 2;
+canvasContext:
+tempCtx,
 
-  const cautionFaite = document.querySelector('input[name="cautionFaite"]:checked');
-  addSection('Caution');
-  addLine('Caution versée', cautionFaite ? cautionFaite.value : '-');
-  addLine('Moyen de paiement', document.getElementById('cautionMoyen').value);
-  addLine('Montant de la caution', document.getElementById('cautionMontant').value + ' €');
-  y += 4;
+viewport:
+viewport
 
-  checkPageBreak(70);
-  addSection("Carte d'identité du locataire");
-  y += 2;
-  try{
-    for(let i = 0; i < idPagesData.length; i++){
-      const pageData = idPagesData[i];
-      const imgProps = doc.getImageProperties(pageData);
+}).promise;
 
-      // Taille maxi pour rester propre sur une page A4
-      const maxW = 120;
-      const maxH = 95;
-      let w = maxW;
-      let h = (imgProps.height * w) / imgProps.width;
 
-      if(h > maxH){
-        h = maxH;
-        w = (imgProps.width * h) / imgProps.height;
-      }
+pages.push(
 
-      checkPageBreak(h + 14);
+tempCanvas.toDataURL(
+"image/jpeg",
+0.92
+)
 
-      if(idPagesData.length > 1){
-        doc.setFont('helvetica','normal');
-        doc.setFontSize(9);
-        doc.text(`Page ${i + 1} / ${idPagesData.length}`, marginL, y);
-        y += 5;
-      }
+);
 
-      doc.addImage(pageData, 'JPEG', marginL, y, w, h);
-      y += h + 8;
-    }
-  }catch(err){
-    console.error(err);
-    addLine('Carte d\'identité', 'Erreur lors de l\'insertion du fichier');
-  }
+}
 
-  checkPageBreak(90);
-  addSection('Signatures');
-  y += 4;
 
-  const sigW = 80, sigH = 30;
-  doc.setFont('helvetica','normal');
-  doc.setFontSize(10);
-  doc.text('Propriétaire :', marginL, y);
-  doc.text('Locataire :', marginL + 95, y);
-  y += 3;
-  doc.addImage(document.getElementById('sigProprio').toDataURL('image/png'), 'PNG', marginL, y, sigW, sigH);
-  doc.addImage(document.getElementById('sigLocataire').toDataURL('image/png'), 'PNG', marginL + 95, y, sigW, sigH);
+return pages;
 
-  const dateGeneration = new Date().toLocaleDateString('fr-FR');
-  doc.setFontSize(8);
-  doc.setTextColor(120);
-  doc.text(`Document généré le ${dateGeneration}`, marginL, 292);
+}
 
-  const nomFichier = `contrat-location-graco-${document.getElementById('locNom').value || 'locataire'}.pdf`.replace(/\s+/g,'_');
-  doc.save(nomFichier);
 
-  status.textContent = "PDF généré et téléchargé.";
-  genBtn.disabled = false;
+
+idFile.addEventListener(
+"change",
+async ()=>{
+
+const file =
+idFile.files[0];
+
+
+idPagesData = [];
+
+idPreview.style.display =
+"none";
+
+idFileInfo.textContent =
+"";
+
+
+if(!file)
+return;
+
+
+try{
+
+const isPDF =
+
+file.type ===
+"application/pdf"
+
+||
+
+file.name
+.toLowerCase()
+.endsWith(".pdf");
+
+
+if(isPDF){
+
+idFileInfo.textContent =
+"Lecture du PDF...";
+
+
+idPagesData =
+await pdfToImages(file);
+
+
+if(
+idPagesData.length
+){
+
+idPreview.src =
+idPagesData[0];
+
+idPreview.style.display =
+"block";
+
+
+idFileInfo.textContent =
+
+"PDF accepté — "
+
++ idPagesData.length
+
++ " page"
+
++ (
+idPagesData.length > 1
+? "s"
+: ""
+)
+
++ " détectée"
+
++ (
+idPagesData.length > 1
+? "s"
+: ""
+)
+
++ ".";
+
+}
+
+}
+
+
+else if(
+file.type.startsWith("image/")
+){
+
+const reader =
+new FileReader();
+
+
+reader.onload =
+e => {
+
+idPagesData =
+[
+e.target.result
+];
+
+idPreview.src =
+e.target.result;
+
+idPreview.style.display =
+"block";
+
+idFileInfo.textContent =
+"Image acceptée.";
+
+};
+
+
+reader.readAsDataURL(
+file
+);
+
+}
+
+
+else{
+
+idFile.value =
+"";
+
+idFileInfo.textContent =
+"Format non accepté. Utilisez une image ou un PDF.";
+
+}
+
+
+}
+
+catch(error){
+
+console.error(error);
+
+idPagesData = [];
+
+idFileInfo.textContent =
+"Impossible de lire ce fichier. Essayez une image ou un autre PDF.";
+
+}
+
+}
+);
+
+
+
+function svgToPng(svgUri){
+
+return new Promise(
+(resolve,reject)=>{
+
+const img =
+new Image();
+
+
+img.onload =
+()=>{
+
+const tempCanvas =
+document.createElement("canvas");
+
+tempCanvas.width =
+1000;
+
+tempCanvas.height =
+550;
+
+
+const tempCtx =
+tempCanvas.getContext("2d");
+
+
+tempCtx.clearRect(
+0,
+0,
+tempCanvas.width,
+tempCanvas.height
+);
+
+
+tempCtx.drawImage(
+img,
+0,
+0,
+tempCanvas.width,
+tempCanvas.height
+);
+
+
+resolve(
+
+tempCanvas.toDataURL(
+"image/png"
+)
+
+);
+
+};
+
+
+img.onerror =
+reject;
+
+
+img.src =
+svgUri;
+
+}
+);
+
+}
+
+
+
+document
+.getElementById("contratForm")
+.addEventListener(
+"submit",
+async e => {
+
+e.preventDefault();
+
+
+const status =
+document.getElementById("status");
+
+const button =
+document.getElementById("genBtn");
+
+
+if(
+isBlank()
+){
+
+status.textContent =
+"Merci au locataire de signer avant de générer le PDF.";
+
+return;
+
+}
+
+
+if(
+!idPagesData.length
+){
+
+status.textContent =
+"Merci d'ajouter la carte d'identité (image ou PDF).";
+
+return;
+
+}
+
+
+button.disabled =
+true;
+
+status.textContent =
+"Génération du PDF en cours...";
+
+
+try{
+
+const {
+jsPDF
+} =
+window.jspdf;
+
+
+const doc =
+new jsPDF({
+
+unit:"mm",
+
+format:"a4"
+
 });
+
+
+const marginLeft = 18;
+
+const marginRight = 18;
+
+const pageWidth = 210;
+
+
+let y = 20;
+
+
+
+function checkPageBreak(
+needed
+){
+
+if(
+y + needed > 280
+){
+
+doc.addPage();
+
+y = 20;
+
+}
+
+}
+
+
+
+function addTitle(
+text
+){
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+doc.setFontSize(
+14
+);
+
+doc.text(
+text,
+marginLeft,
+y
+);
+
+y += 9;
+
+}
+
+
+
+function addSection(
+text
+){
+
+checkPageBreak(
+16
+);
+
+doc.setFont(
+"helvetica",
+"bold"
+);
+
+doc.setFontSize(
+11
+);
+
+doc.text(
+text,
+marginLeft,
+y
+);
+
+y += 7;
+
+doc.setDrawColor(
+210
+);
+
+doc.line(
+
+marginLeft,
+
+y - 4.5,
+
+pageWidth - marginRight,
+
+y - 4.5
+
+);
+
+}
+
+
+
+function addLine(
+label,
+value
+){
+
+checkPageBreak(
+8
+);
+
+doc.setFont(
+"helvetica",
+"normal"
+);
+
+doc.setFontSize(
+10.5
+);
+
+
+const lines =
+doc.splitTextToSize(
+
+label
+
++ " : "
+
++ (
+value || "-"
+),
+
+pageWidth
+- marginLeft
+- marginRight
+
+);
+
+
+doc.text(
+lines,
+marginLeft,
+y
+);
+
+
+y +=
+lines.length
+* 5.5
++ 1;
+
+}
+
+
+
+addTitle(
+
+"Contrat de location - Pistolet Graco A100 Pro Plus"
+
+);
+
+
+y += 2;
+
+
+
+addSection(
+"Propriétaire"
+);
+
+
+addLine(
+
+"Nom et prénom",
+
+OWNER_NAME
+
+);
+
+
+y += 2;
+
+
+
+addSection(
+"Locataire"
+);
+
+
+addLine(
+
+"Prénom",
+
+document
+.getElementById("locPrenom")
+.value
+
+);
+
+
+addLine(
+
+"Nom",
+
+document
+.getElementById("locNom")
+.value
+
+);
+
+
+addLine(
+
+"Adresse du chantier",
+
+document
+.getElementById("chantierAdresse")
+.value
+
+);
+
+
+y += 2;
+
+
+
+addSection(
+"Détails de la location"
+);
+
+
+addLine(
+
+"Matériel loué",
+
+"Pistolet à peinture Graco A100 Pro Plus"
+
+);
+
+
+addLine(
+
+"Montant de la location",
+
+document
+.getElementById("montantLocation")
+.value
+
++ " €"
+
+);
+
+
+addLine(
+
+"Date de récupération",
+
+document
+.getElementById("dateRecup")
+.value
+
+);
+
+
+addLine(
+
+"Durée de location prévue",
+
+document
+.getElementById("duree")
+.value
+
+);
+
+
+
+const remarques =
+
+document
+.getElementById("remarques")
+.value
+.trim();
+
+
+
+if(
+remarques
+){
+
+addLine(
+
+"Remarques / informations complémentaires",
+
+remarques
+
+);
+
+}
+
+
+y += 2;
+
+
+
+const caution =
+
+document.querySelector(
+
+'input[name="cautionFaite"]:checked'
+
+);
+
+
+
+addSection(
+"Caution"
+);
+
+
+addLine(
+
+"Caution versée",
+
+caution
+? caution.value
+: "-"
+
+);
+
+
+addLine(
+
+"Moyen de paiement",
+
+document
+.getElementById("cautionMoyen")
+.value
+
+);
+
+
+addLine(
+
+"Montant de la caution",
+
+document
+.getElementById("cautionMontant")
+.value
+
++ " €"
+
+);
+
+
+y += 4;
+
+
+
+checkPageBreak(
+70
+);
+
+
+addSection(
+
+"Carte d'identité du locataire"
+
+);
+
+
+y += 2;
+
+
+
+for(
+
+let i = 0;
+
+i < idPagesData.length;
+
+i++
+
+){
+
+const imageData =
+idPagesData[i];
+
+
+const imageProperties =
+doc.getImageProperties(
+imageData
+);
+
+
+let width = 120;
+
+
+let height =
+
+imageProperties.height
+
+* width
+
+/
+
+imageProperties.width;
+
+
+if(
+height > 95
+){
+
+height = 95;
+
+
+width =
+
+imageProperties.width
+
+* height
+
+/
+
+imageProperties.height;
+
+}
+
+
+checkPageBreak(
+height + 16
+);
+
+
+
+if(
+idPagesData.length > 1
+){
+
+doc.setFontSize(
+9
+);
+
+
+doc.text(
+
+"Page "
+
++ (i + 1)
+
++ " / "
+
++ idPagesData.length,
+
+marginLeft,
+
+y
+
+);
+
+
+y += 5;
+
+}
+
+
+
+doc.addImage(
+
+imageData,
+
+"JPEG",
+
+marginLeft,
+
+y,
+
+width,
+
+height
+
+);
+
+
+y +=
+height + 8;
+
+}
+
+
+
+checkPageBreak(
+65
+);
+
+
+addSection(
+"Signatures"
+);
+
+
+y += 4;
+
+
+doc.setFont(
+
+"helvetica",
+
+"normal"
+
+);
+
+
+doc.setFontSize(
+10
+);
+
+
+doc.text(
+
+"Propriétaire — Dorian Thébé :",
+
+marginLeft,
+
+y
+
+);
+
+
+doc.text(
+
+"Locataire :",
+
+marginLeft + 95,
+
+y
+
+);
+
+
+y += 4;
+
+
+
+const ownerSignaturePNG =
+
+await svgToPng(
+
+OWNER_SIGNATURE
+
+);
+
+
+
+doc.addImage(
+
+ownerSignaturePNG,
+
+"PNG",
+
+marginLeft,
+
+y,
+
+72,
+
+40
+
+);
+
+
+
+doc.addImage(
+
+canvas.toDataURL(
+"image/png"
+),
+
+"PNG",
+
+marginLeft + 95,
+
+y,
+
+80,
+
+30
+
+);
+
+
+
+const generationDate =
+
+new Date()
+.toLocaleDateString(
+"fr-FR"
+);
+
+
+
+const totalPages =
+doc.getNumberOfPages();
+
+
+
+for(
+
+let page = 1;
+
+page <= totalPages;
+
+page++
+
+){
+
+doc.setPage(
+page
+);
+
+
+doc.setFontSize(
+8
+);
+
+
+doc.setTextColor(
+120
+);
+
+
+doc.text(
+
+"Document généré le "
+
++ generationDate,
+
+marginLeft,
+
+290
+
+);
+
+
+doc.text(
+
+"Page "
+
++ page
+
++ " / "
+
++ totalPages,
+
+pageWidth
+- marginRight,
+
+290,
+
+{
+align:"right"
+}
+
+);
+
+}
+
+
+
+const locataireNom =
+
+(
+document
+.getElementById("locNom")
+.value
+
+|| "locataire"
+)
+
+.replace(
+/\s+/g,
+"_"
+);
+
+
+
+doc.save(
+
+"contrat-location-graco-"
+
++ locataireNom
+
++ ".pdf"
+
+);
+
+
+
+status.textContent =
+"PDF généré et téléchargé.";
+
+}
+
+
+catch(error){
+
+console.error(
+error
+);
+
+
+status.textContent =
+"Une erreur est survenue pendant la génération du PDF.";
+
+}
+
+
+finally{
+
+button.disabled =
+false;
+
+}
+
+}
+);
+
 </script>
+
 </body>
 </html>
